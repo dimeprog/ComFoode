@@ -1,6 +1,7 @@
+import 'package:comfoode/views/Home/widgets/home_drawer.dart';
 import 'package:comfoode/views/Home/widgets/home_grid.dart';
 import 'package:comfoode/views/Home/widgets/home_price_tag.dart';
-import 'package:comfoode/views/Home/widgets/tracking_card.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -30,45 +31,14 @@ class HomeView extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Icons.notifications,
-              color: ColorManager.white,
+              Icons.shopping_cart_rounded,
+              color: ColorManager.amber,
             ),
           )
         ],
       ),
-      drawer: const Drawer(),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: getHeight(20)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: getHeight(30),
-              ),
-              HomeTag(),
-              SizedBox(
-                height: getHeight(30),
-              ),
-              TrackingCard(),
-              SizedBox(
-                height: getHeight(30),
-              ),
-              Text(
-                'Send a Package',
-                style: getMediumTextStyle(
-                  color: ColorManager.black,
-                  fontSize: FontSizeManager.s24,
-                ),
-              ),
-              SizedBox(
-                height: getHeight(17),
-              ),
-              const HomeGridView(),
-            ],
-          ),
-        ),
-      ),
+      drawer: const HomeDrawer(),
+      body: const HomeGridView(),
     );
   }
 }

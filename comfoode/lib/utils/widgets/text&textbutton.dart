@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'dimension_manager.dart';
+import '../resources/dimension_manager.dart';
 
 class TextAndTextButton extends StatelessWidget {
   final String? text;

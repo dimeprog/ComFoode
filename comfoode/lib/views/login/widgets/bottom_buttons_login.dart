@@ -8,8 +8,8 @@ import '../../../utils/resources/dimension_manager.dart';
 import '../../../utils/widgets/mini_button_card.dart';
 import '../../../utils/resources/routes_manager.dart';
 
-class BottomButton extends StatelessWidget {
-  const BottomButton({Key? key}) : super(key: key);
+class BottomButtonLogin extends StatelessWidget {
+  const BottomButtonLogin({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,10 +17,10 @@ class BottomButton extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: getWidth(42)),
       child: Center(
         child: MiniButtonCard(
-          title: 'SignUp',
+          title: 'Login',
           textcolor: ColorManager.white,
           backgroundColor: ColorManager.lightBlue,
-          onPressed: () => Get.toNamed(RouteManager.goToVerificationRoute()),
+          onPressed: () => Get.toNamed(RouteManager.goToHomeRoute()),
         ),
       ),
     );

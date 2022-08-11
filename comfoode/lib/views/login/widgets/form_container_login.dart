@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../../../utils/resources/dimension_manager.dart';
 
-class FormContainer extends StatelessWidget {
+class FormContainerLogin extends StatelessWidget {
   //  controller
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -25,14 +25,6 @@ class FormContainer extends StatelessWidget {
       child: Column(
         children: [
           TextFieldContainer(
-            controller: _nameController,
-            title: 'Full Name',
-            validator: (val) {},
-          ),
-          SizedBox(
-            height: getHeight(20),
-          ),
-          TextFieldContainer(
             controller: _emailController,
             title: ' Your Email',
             validator: (val) {},
@@ -43,14 +35,6 @@ class FormContainer extends StatelessWidget {
           TextFieldContainer(
             controller: _passwordController,
             title: 'Password',
-            validator: (val) {},
-          ),
-          SizedBox(
-            height: getHeight(20),
-          ),
-          TextFieldContainer(
-            controller: _confirmpasswordController,
-            title: 'Confirm Password',
             validator: (val) {},
           ),
           SizedBox(

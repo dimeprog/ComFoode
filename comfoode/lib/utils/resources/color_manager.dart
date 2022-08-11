@@ -10,6 +10,8 @@ class ColorManager {
 
   static Color error = Colors.red;
   static Color black = Colors.black;
+  static Color amber = Colors.amber.withOpacity(0.7);
+
   static Color onboardingtitleColor = HexColor.fromHex('#525252');
   static Color grey = HexColor.fromHex('#606060');
 }

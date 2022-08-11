@@ -17,7 +17,7 @@ class RouteManager {
   static const String onRegisterSuccessRoute = '/register_sucess';
   static const String onHomeRoute = '/home';
 
-  static const String onVerificationRExpiredRoute = '/verification_Expired';
+  static const String onVerificationRoute = '/verification_Expired';
 
   //  route functions
   static String goToOnboardingRoute() => onBoardRoute;
@@ -28,7 +28,7 @@ class RouteManager {
   static String goToRegSuccesRoute() => onRegisterSuccessRoute;
   static String goToHomeRoute() => onHomeRoute;
 
-  static String goToVerificationExpiredRoute() => onVerificationRExpiredRoute;
+  static String goToVerificationRoute() => onVerificationRoute;
 
 // list of route
   static List<GetPage> routes = [
@@ -57,7 +57,7 @@ class RouteManager {
       page: () => HomeView(),
     ),
     GetPage(
-      name: onVerificationRExpiredRoute,
+      name: onVerificationRoute,
       page: () => VerificationView(),
     ),
   ];
