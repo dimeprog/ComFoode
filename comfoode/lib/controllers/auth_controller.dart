@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../Models/userModel.dart';
+import '../Models/user_reg_model.dart';
 import '../data/local/shared_pref.dart';
 
 enum AuthState {
