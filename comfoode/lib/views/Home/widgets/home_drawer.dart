@@ -1,3 +1,4 @@
+import 'package:comfoode/utils/resources/dimension_manager.dart';
 import 'package:comfoode/utils/resources/font_manager.dart';
 import 'package:comfoode/utils/resources/style_manager.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,13 +19,19 @@ class HomeDrawer extends StatelessWidget {
         color: ColorManager.white,
         child: Column(
           children: [
-            Text(
-              'Menu',
-              style: TextStyle(
-                color: ColorManager.lightBlue,
-                fontSize: 30,
-                fontFamily: 'ConcertOne',
+            AppBar(
+              leading: Text(''),
+              title: Text(
+                'Menu',
+                style: TextStyle(
+                  color: ColorManager.lightBlue,
+                  fontSize: 30,
+                  fontFamily: 'ConcertOne',
+                ),
               ),
+            ),
+            SizedBox(
+              height: getHeight(20),
             ),
             TextButton(
               onPressed: () {},
@@ -39,6 +46,9 @@ class HomeDrawer extends StatelessWidget {
             const Divider(
               thickness: 1,
             ),
+            SizedBox(
+              height: getHeight(20),
+            ),
             TextButton(
               onPressed: () {},
               child: Text(
@@ -51,6 +61,9 @@ class HomeDrawer extends StatelessWidget {
             ),
             const Divider(
               thickness: 1,
+            ),
+            SizedBox(
+              height: getHeight(20),
             ),
             TextButton(
               onPressed: () {},

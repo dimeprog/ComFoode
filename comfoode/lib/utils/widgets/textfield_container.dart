@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../../../utils/resources/color_manager.dart';
-import '../../../utils/resources/dimension_manager.dart';
-import '../../../utils/resources/font_manager.dart';
-import '../../../utils/resources/style_manager.dart';
+import '../resources/color_manager.dart';
+import '../resources/dimension_manager.dart';
+import '../resources/font_manager.dart';
+import '../resources/style_manager.dart';
 
 class TextFieldContainer extends StatelessWidget {
   final String title;

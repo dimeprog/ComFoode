@@ -55,25 +55,6 @@ class SignUpView extends StatelessWidget {
               height: getHeight(22.44),
             ),
             FormContainer(),
-            SizedBox(
-              height: getHeight(7),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: getWidth(67),
-              ),
-              child: TextAndTextButton(
-                text: 'Already have an account?',
-                textButtonTitle: 'Log In',
-                onPressed: () => Get.toNamed(
-                  RouteManager.goToLoginRoute(),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: getHeight(37),
-            ),
-            const BottomButton(),
           ],
         ),
       ),

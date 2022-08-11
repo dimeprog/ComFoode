@@ -15,6 +15,8 @@ class BottomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: getWidth(42)),
+      height: 100,
+      width: 150,
       child: Center(
         child: MiniButtonCard(
           title: 'SignUp',

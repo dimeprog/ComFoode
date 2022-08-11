@@ -34,40 +34,41 @@ class OnBoardingView extends StatelessWidget {
         height: getHeight(926),
         width: double.infinity,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: getHeight(84.33),
-              ),
+            Card(
+              elevation: 8,
               child: Container(
-                width: getWidth(AppSize.s319_27),
-                height: getHeight(78),
-                child: Text(
-                  'What kind of user are you?',
-                  style: TextStyle(
-                    fontSize: getHeight(FontSizeManager.s26_33),
-                    color: ColorManager.textcolor,
-                    fontWeight: FontWeightManager.medium,
+                width: 300,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: ColorManager.amber,
+                  borderRadius: BorderRadius.circular(
+                    getHeight(20),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'ComFoode',
+                    style: TextStyle(
+                      color: ColorManager.lightBlue,
+                      fontSize: 60,
+                      fontFamily: 'ConcertOne',
+                    ),
                   ),
                 ),
               ),
             ),
-            SizedBox(
-              height: getHeight(4.09),
-            ),
             Container(
-              width: getWidth(AppSize.s319_27),
-              height: getHeight(78),
+              padding: EdgeInsets.only(left: getWidth(22)),
+              height: getHeight(152),
               child: Text(
-                'We will adapt the app to suit your needs.',
-                style: getLightTextStyle(
+                ' The Best food you can order is waiting for you, just in there and feast',
+                style: getBoldTextStyle(
                   color: ColorManager.textcolor,
-                  fontSize: FontSizeManager.s17,
+                  fontSize: FontSizeManager.s20,
                 ),
               ),
-            ),
-            SizedBox(
-              height: getHeight(48.04),
             ),
             ButtonContainer(
               title: 'Continue',

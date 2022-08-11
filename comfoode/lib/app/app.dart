@@ -1,3 +1,4 @@
+import 'package:comfoode/helpers/app_bindings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
       theme: getApplicationTheme(),
       getPages: RouteManager.routes,
       home: SplashView(),
+      initialBinding: AppBinding(),
     );
   }
 }
