@@ -9,7 +9,11 @@ import '../../../utils/widgets/mini_button_card.dart';
 import '../../../utils/resources/routes_manager.dart';
 
 class BottomButtonLogin extends StatelessWidget {
-  const BottomButtonLogin({Key? key}) : super(key: key);
+  final onpressed;
+  const BottomButtonLogin({
+    Key? key,
+    required this.onpressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class BottomButtonLogin extends StatelessWidget {
           title: 'Login',
           textcolor: ColorManager.white,
           backgroundColor: ColorManager.lightBlue,
-          onPressed: () => Get.toNamed(RouteManager.goToHomeRoute()),
+          onPressed: onpressed,
         ),
       ),
     );

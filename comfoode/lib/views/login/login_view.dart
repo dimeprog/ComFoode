@@ -55,27 +55,6 @@ class LoginView extends StatelessWidget {
               height: getHeight(22.44),
             ),
             FormContainerLogin(),
-            SizedBox(
-              height: getHeight(7),
-            ),
-            Center(
-              child: TextButton(
-                child: Text(
-                  'Create an Account',
-                  style: getMediumTextStyle(
-                    color: ColorManager.lightBlue,
-                    fontSize: FontSizeManager.s16,
-                  ),
-                ),
-                onPressed: () => Get.toNamed(
-                  RouteManager.goToSignUpRoute(),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: getHeight(37),
-            ),
-            const BottomButtonLogin(),
           ],
         ),
       ),

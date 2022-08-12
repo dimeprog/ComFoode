@@ -44,7 +44,7 @@ class SignUpView extends StatelessWidget {
               padding: EdgeInsets.only(left: getWidth(22)),
               height: getHeight(52),
               child: Text(
-                'Create an account to get started with Cargo Express',
+                'Create an account to get started with Comfoode',
                 style: getLightTextStyle(
                   color: ColorManager.textcolor,
                   fontSize: FontSizeManager.s17,
@@ -52,7 +52,7 @@ class SignUpView extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: getHeight(22.44),
+              height: getHeight(5),
             ),
             FormContainer(),
           ],

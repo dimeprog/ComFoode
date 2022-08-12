@@ -9,7 +9,11 @@ import '../../../utils/widgets/mini_button_card.dart';
 import '../../../utils/resources/routes_manager.dart';
 
 class BottomButton extends StatelessWidget {
-  const BottomButton({Key? key}) : super(key: key);
+  final onPressed;
+  const BottomButton({
+    Key? key,
+    required this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,7 @@ class BottomButton extends StatelessWidget {
           title: 'SignUp',
           textcolor: ColorManager.white,
           backgroundColor: ColorManager.lightBlue,
-          onPressed: () => Get.toNamed(RouteManager.goToVerificationRoute()),
+          onPressed: onPressed,
         ),
       ),
     );

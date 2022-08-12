@@ -1,44 +1,84 @@
+import 'package:comfoode/controllers/auth_controller.dart';
+import 'package:comfoode/utils/resources/strings_manager.dart';
 import 'package:comfoode/utils/widgets/textfield_container.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
+import '../../../utils/resources/color_manager.dart';
 import '../../../utils/resources/dimension_manager.dart';
+import '../../../utils/resources/font_manager.dart';
+import '../../../utils/resources/routes_manager.dart';
+import '../../../utils/resources/style_manager.dart';
+import 'bottom_buttons_login.dart';
 
 class FormContainerLogin extends StatelessWidget {
   //  controller
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmpasswordController =
-      TextEditingController();
+  final AuthController _authController = Get.find<AuthController>();
 
   //  key
-  final _formKey = GlobalKey<FormState>();
+  final _formKeyLogin = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Form(
-      key: _formKey,
+      key: _formKeyLogin,
       autovalidateMode: AutovalidateMode.always,
       child: Column(
         children: [
           TextFieldContainer(
-            controller: _emailController,
+            controller: _authController.emailLoginController,
             title: ' Your Email',
-            validator: (val) {},
+            validator: (val) {
+              bool correctMail =
+                  RegExp(AppStringManager.regExpression).hasMatch(val);
+              if (!correctMail) {
+                return 'invalid email';
+              }
+              return null;
+            },
           ),
           SizedBox(
             height: getHeight(20),
           ),
           TextFieldContainer(
-            controller: _passwordController,
+            controller: _authController.passwordLoginController,
             title: 'Password',
-            validator: (val) {},
+            validator: (val) {
+              if (val.toString().length < 6) {
+                return 'Password should more than 6 characters';
+              }
+              return null;
+            },
           ),
           SizedBox(
-            height: getHeight(20),
+            height: getHeight(7),
+          ),
+          Center(
+            child: TextButton(
+              child: Text(
+                'Create an Account',
+                style: getMediumTextStyle(
+                  color: ColorManager.lightBlue,
+                  fontSize: FontSizeManager.s16,
+                ),
+              ),
+              onPressed: () => Get.toNamed(
+                RouteManager.goToSignUpRoute(),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: getHeight(37),
+          ),
+          BottomButtonLogin(
+            onpressed: () {
+              if (_formKeyLogin.currentState!.validate()) {
+                _authController.login();
+              }
+            },
           ),
         ],
       ),
