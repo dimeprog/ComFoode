@@ -35,7 +35,7 @@ class TextFieldContainer extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: getHeight(44),
+            height: getHeight(90),
             child: TextFormField(
               obscureText: obsecureText,
               controller: controller,

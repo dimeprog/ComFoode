@@ -103,14 +103,14 @@ ThemeData getApplicationTheme() {
       ),
       border: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.white, width: AppSize.s1_5),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s17),
+        borderRadius: BorderRadius.circular(
+          AppSize.s17,
         ),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.white, width: AppSize.s1_5),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s17),
+        borderRadius: BorderRadius.circular(
+          AppSize.s17,
         ),
       ),
       disabledBorder: OutlineInputBorder(
@@ -121,21 +121,21 @@ ThemeData getApplicationTheme() {
       ),
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1_5),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s17),
+        borderRadius: BorderRadius.circular(
+          AppSize.s17,
         ),
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1_5),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s17),
+        borderRadius: BorderRadius.circular(
+          AppSize.s17,
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide:
             BorderSide(color: ColorManager.primary, width: AppSize.s1_5),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(AppSize.s17),
+        borderRadius: BorderRadius.circular(
+          AppSize.s17,
         ),
       ),
     ),

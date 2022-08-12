@@ -1,8 +1,11 @@
+import 'package:comfoode/controllers/auth_controller.dart';
+import 'package:comfoode/utils/resources/strings_manager.dart';
 import 'package:comfoode/views/sign%20up/widgets/bottom_buttons.dart';
 import 'package:comfoode/utils/widgets/textfield_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../utils/resources/dimension_manager.dart';
@@ -12,13 +15,10 @@ import '../../../utils/widgets/textfield_container.dart';
 
 class FormContainer extends StatelessWidget {
   //  controller
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _confirmpasswordController =
       TextEditingController();
-
+  final AuthController _authController = Get.put(AuthController());
   //  key
   final _formKey = GlobalKey<FormState>();
 
@@ -30,39 +30,59 @@ class FormContainer extends StatelessWidget {
       child: Column(
         children: [
           TextFieldContainer(
-            controller: _nameController,
+            controller: _authController.nameSignUpController,
             title: 'Full Name',
-            validator: (val) {},
+            validator: (val) {
+              if (val.toString().length < 4) {
+                return 'name should more than 4 characters';
+              }
+              return null;
+            },
           ),
           SizedBox(
-            height: getHeight(20),
+            height: getHeight(8),
           ),
           TextFieldContainer(
-            controller: _emailController,
+            controller: _authController.emailSignUpController,
             title: ' Your Email',
-            validator: (val) {},
+            validator: (val) {
+              bool correctMail =
+                  RegExp(AppStringManager.regExpression).hasMatch(val);
+              if (!correctMail) {
+                return 'invalid email';
+              }
+              return null;
+            },
           ),
           SizedBox(
-            height: getHeight(20),
+            height: getHeight(8),
           ),
           TextFieldContainer(
-            controller: _passwordController,
+            controller: _authController.passwordSignUpController,
             title: 'Password',
-            validator: (val) {},
+            validator: (val) {
+              if (val.toString().length < 6) {
+                return 'Password should more than 6 characters';
+              }
+              return null;
+            },
           ),
           SizedBox(
-            height: getHeight(20),
+            height: getHeight(8),
           ),
           TextFieldContainer(
             controller: _confirmpasswordController,
             title: 'Confirm Password',
-            validator: (val) {},
+            validator: (val) {
+              if (val.trim() !=
+                  _authController.passwordSignUpController.text.trim()) {
+                return 'Password does not match';
+              }
+              return null;
+            },
           ),
           SizedBox(
-            height: getHeight(20),
-          ),
-          SizedBox(
-            height: getHeight(7),
+            height: getHeight(8),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -78,7 +98,11 @@ class FormContainer extends StatelessWidget {
               },
             ),
           ),
-          const BottomButton(),
+          BottomButton(onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _authController.signUp();
+            }
+          }),
         ],
       ),
     );
