@@ -1,4 +1,5 @@
 import 'package:comfoode/helpers/app_bindings.dart';
+import 'package:comfoode/views/Home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'ComFoode',
       theme: getApplicationTheme(),
       getPages: RouteManager.routes,
-      home: SplashView(),
+      home: HomeView(),
       initialBinding: AppBinding(),
     );
   }

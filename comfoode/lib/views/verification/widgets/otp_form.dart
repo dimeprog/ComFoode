@@ -1,6 +1,10 @@
+import 'package:comfoode/data/remote/repository/auth_repo.dart';
+import 'package:comfoode/utils/resources/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../../../utils/resources/dimension_manager.dart';
 import 'otp_circle_field.dart';
@@ -14,66 +18,60 @@ class OtpForm extends StatefulWidget {
 
 class _OtpFormState extends State<OtpForm> {
   // controller
-  final TextEditingController _oneController = TextEditingController();
-
-  final TextEditingController _twoController = TextEditingController();
-
-  final TextEditingController _threeController = TextEditingController();
-
-  final TextEditingController _fourController = TextEditingController();
-
-  final TextEditingController _fiveController = TextEditingController();
-
-  final TextEditingController _sixController = TextEditingController();
-
+  final AuthRepository _authRepository = Get.put(AuthRepository());
   //  keys
   final _otpFormKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _oneController.dispose();
-    _twoController.dispose();
-    _threeController.dispose();
-    _fourController.dispose();
-    _fiveController.dispose();
-    _sixController.dispose();
-  }
 
+  var errorController;
+  @override
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _otpFormKey,
       child: Container(
+        color: Colors.transparent,
         width: double.infinity,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            OtpCircleField(
-              Controller: _oneController,
-              validator: (val) {},
-            ),
-            OtpCircleField(Controller: _twoController, validator: (val) {}),
-            SizedBox(
-              width: getWidth(6),
-            ),
-            OtpCircleField(Controller: _threeController, validator: (val) {}),
-            SizedBox(
-              width: getWidth(6),
-            ),
-            OtpCircleField(Controller: _fourController, validator: (val) {}),
-            SizedBox(
-              width: getWidth(6),
-            ),
-            OtpCircleField(
-              Controller: _fiveController,
-              validator: (val) {},
-            ),
-            SizedBox(
-              width: getWidth(6),
-            ),
-            OtpCircleField(Controller: _sixController, validator: (val) {}),
-          ],
+        child: PinCodeTextField(
+          controller: _authRepository.otpController,
+          length: 6,
+          obscureText: true,
+          animationType: AnimationType.fade,
+          keyboardType: TextInputType.emailAddress,
+          pinTheme: PinTheme(
+            inactiveColor: ColorManager.lightBlue,
+            activeColor: ColorManager.white,
+            selectedColor: ColorManager.amber,
+            selectedFillColor: Colors.white,
+            inactiveFillColor: Colors.white,
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(getHeight(15)),
+            fieldHeight: 50,
+            fieldWidth: 50,
+            activeFillColor: Colors.white,
+          ),
+          animationDuration: const Duration(milliseconds: 300),
+          enableActiveFill: true,
+          errorAnimationController: errorController,
+          // controller: textEditingController,
+          onCompleted: (v) {
+            // ignore: avoid_print
+            print("Completed");
+          },
+          onChanged: (value) {
+            // ignore: avoid_print
+            print(value);
+            // setState(() {
+            //   currentText = value;
+            // });
+          },
+          beforeTextPaste: (text) {
+            // ignore: avoid_print
+            print("Allowing to paste $text");
+            //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+            //but you can show anything you want here, like your pop up saying wrong paste format or etc
+            return true;
+          },
+          appContext: context,
         ),
       ),
     );

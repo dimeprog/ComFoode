@@ -1,4 +1,5 @@
 import 'package:comfoode/controllers/auth_controller.dart';
+import 'package:comfoode/data/remote/repository/auth_repo.dart';
 import 'package:comfoode/utils/resources/strings_manager.dart';
 import 'package:comfoode/utils/widgets/textfield_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +17,8 @@ import 'bottom_buttons_login.dart';
 
 class FormContainerLogin extends StatelessWidget {
   //  controller
-  final AuthController _authController = Get.find<AuthController>();
+  // final AuthController _authController = Get.find<AuthController>();
+  final AuthRepository _authRepository = Get.put(AuthRepository());
 
   //  key
   final _formKeyLogin = GlobalKey<FormState>();
@@ -29,12 +31,11 @@ class FormContainerLogin extends StatelessWidget {
       child: Column(
         children: [
           TextFieldContainer(
-            controller: _authController.emailLoginController,
+            controller: _authRepository.emailLoginController,
             title: ' Your Email',
             validator: (val) {
-              bool correctMail =
-                  RegExp(AppStringManager.regExpression).hasMatch(val);
-              if (!correctMail) {
+              if (GetUtils.isEmail(_authRepository.emailLoginController.text) ==
+                  false) {
                 return 'invalid email';
               }
               return null;
@@ -44,7 +45,7 @@ class FormContainerLogin extends StatelessWidget {
             height: getHeight(20),
           ),
           TextFieldContainer(
-            controller: _authController.passwordLoginController,
+            controller: _authRepository.passwordLoginController,
             title: 'Password',
             validator: (val) {
               if (val.toString().length < 6) {
@@ -76,7 +77,7 @@ class FormContainerLogin extends StatelessWidget {
           BottomButtonLogin(
             onpressed: () {
               if (_formKeyLogin.currentState!.validate()) {
-                _authController.login();
+                _authRepository.SignIn();
               }
             },
           ),

@@ -1,28 +1,25 @@
+import 'package:comfoode/data/remote/repository/product_repo.dart';
+import 'package:comfoode/models/product_model.dart';
 import 'package:comfoode/utils/resources/values_manager.dart';
+import 'package:comfoode/views/Home/widgets/home_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 import '../../../utils/resources/color_manager.dart';
 import '../../../utils/resources/dimension_manager.dart';
 
 class HomeGridView extends StatelessWidget {
-  const HomeGridView({Key? key}) : super(key: key);
+  final ProductReposistory _productReposistory = Get.put(ProductReposistory());
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(AppSize.s10),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: getHeight(10),
-          crossAxisSpacing: getWidth(10),
-        ),
-        itemBuilder: (context, index) => Container(
-          color: ColorManager.lightBlue,
-          height: getHeight(242),
-          width: getWidth(186),
+      child: ListView.builder(
+        itemBuilder: (context, index) => HomeItem(
+          product: _productReposistory.productList[index],
         ),
         itemCount: 100,
       ),
