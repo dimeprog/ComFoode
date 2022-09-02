@@ -25,7 +25,7 @@ class TextAndTextButton extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        FlatButton(
+        TextButton(
           onPressed: onPressed,
           child: Text(
             textButtonTitle!,

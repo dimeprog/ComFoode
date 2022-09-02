@@ -1,3 +1,4 @@
+import 'package:comfoode/views/login/login_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -67,7 +68,7 @@ class SucessfulView extends StatelessWidget {
               width: getWidth(193),
               height: getHeight(63),
               child: ElevatedButton(
-                onPressed: () => Get.offAll(() => HomeView()),
+                onPressed: () => Get.offAll(() => LoginView()),
                 child: Text(
                   'Continue',
                   style: getMediumTextStyle(

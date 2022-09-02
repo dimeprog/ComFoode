@@ -38,7 +38,7 @@ class HomeView extends StatelessWidget {
         ],
       ),
       drawer: const HomeDrawer(),
-      body: const HomeGridView(),
+      body: HomeGridView(),
     );
   }
 }

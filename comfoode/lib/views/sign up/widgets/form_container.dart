@@ -1,4 +1,5 @@
 import 'package:comfoode/controllers/auth_controller.dart';
+import 'package:comfoode/data/remote/repository/auth_repo.dart';
 import 'package:comfoode/utils/resources/strings_manager.dart';
 import 'package:comfoode/views/sign%20up/widgets/bottom_buttons.dart';
 import 'package:comfoode/utils/widgets/textfield_container.dart';
@@ -18,7 +19,8 @@ class FormContainer extends StatelessWidget {
 
   final TextEditingController _confirmpasswordController =
       TextEditingController();
-  final AuthController _authController = Get.put(AuthController());
+  // final AuthController _authController = Get.put(AuthController());
+  final AuthRepository _authRepository = Get.put(AuthRepository());
   //  key
   final _formKey = GlobalKey<FormState>();
 
@@ -30,7 +32,7 @@ class FormContainer extends StatelessWidget {
       child: Column(
         children: [
           TextFieldContainer(
-            controller: _authController.nameSignUpController,
+            controller: _authRepository.nameSignUpController,
             title: 'Full Name',
             validator: (val) {
               if (val.toString().length < 4) {
@@ -43,12 +45,14 @@ class FormContainer extends StatelessWidget {
             height: getHeight(8),
           ),
           TextFieldContainer(
-            controller: _authController.emailSignUpController,
+            controller: _authRepository.emailSignUpController,
             title: ' Your Email',
             validator: (val) {
-              bool correctMail =
-                  RegExp(AppStringManager.regExpression).hasMatch(val);
-              if (!correctMail) {
+              // bool correctMail =
+              //     RegExp(AppStringManager.regExpression).hasMatch(val);
+              if (GetUtils.isEmail(
+                      _authRepository.emailSignUpController.text) ==
+                  false) {
                 return 'invalid email';
               }
               return null;
@@ -58,7 +62,7 @@ class FormContainer extends StatelessWidget {
             height: getHeight(8),
           ),
           TextFieldContainer(
-            controller: _authController.passwordSignUpController,
+            controller: _authRepository.passwordSignUpController,
             title: 'Password',
             validator: (val) {
               if (val.toString().length < 6) {
@@ -75,7 +79,7 @@ class FormContainer extends StatelessWidget {
             title: 'Confirm Password',
             validator: (val) {
               if (val.trim() !=
-                  _authController.passwordSignUpController.text.trim()) {
+                  _authRepository.passwordSignUpController.text.trim()) {
                 return 'Password does not match';
               }
               return null;
@@ -100,7 +104,7 @@ class FormContainer extends StatelessWidget {
           ),
           BottomButton(onPressed: () {
             if (_formKey.currentState!.validate()) {
-              _authController.signUp();
+              _authRepository.SignUp();
             }
           }),
         ],

@@ -13,6 +13,7 @@ class VerifyOtpRepo {
     };
     var response = await ApiClient.postData(AppLinks.verifyMail, load);
     if (response.statusCode == 200) {
+      print(json.decode(response.body));
       return RegisterResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Unable to load data');

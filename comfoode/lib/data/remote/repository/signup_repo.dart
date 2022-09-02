@@ -9,6 +9,7 @@ class SignUpRepo {
   static Future<RegisterResponse> signUp(RegisterRequest reqModel) async {
     final response = await ApiClient.postData(AppLinks.signup, reqModel);
     if (response.statusCode == 200) {
+      print(json.decode(response.body));
       return RegisterResponse.fromJson(json.decode(response.body));
     } else {
       throw Exception('Unable to load data');

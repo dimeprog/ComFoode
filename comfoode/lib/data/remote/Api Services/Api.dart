@@ -22,7 +22,7 @@ class ApiClient {
     var response = await http
         .post(
           url,
-          body: load,
+          body: jsonEncode(load),
         )
         .timeout(const Duration(seconds: TIMEOUT));
     return processResponse(response);

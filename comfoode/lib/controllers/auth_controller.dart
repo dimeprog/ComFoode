@@ -1,20 +1,15 @@
-import 'dart:convert';
-
-import 'package:comfoode/Models/login_model.dart';
-import 'package:comfoode/Models/register_model.dart';
-import 'package:comfoode/data/remote/Api%20Services/constant.dart';
-import 'package:comfoode/data/remote/Api%20Services/Api.dart';
-import 'package:comfoode/data/remote/repository/login_repo.dart';
-import 'package:comfoode/data/remote/repository/signup_repo.dart';
-import 'package:comfoode/data/remote/repository/verify_otp_repo.dart';
-import 'package:comfoode/utils/resources/color_manager.dart';
-import 'package:comfoode/views/Home/home_view.dart';
-import 'package:comfoode/views/verification/verification.dart';
+import 'package:comfoode/models/login_model.dart';
+import '../Models/register_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../data/remote/repository/login_repo.dart';
+import '../data/remote/repository/signup_repo.dart';
+import '../data/remote/repository/verify_otp_repo.dart';
+import '../utils/resources/color_manager.dart';
 import '../utils/resources/routes_manager.dart';
+import '../views/Home/home_view.dart';
+import '../views/verification/verification.dart';
 
 class AuthController extends GetxController {
   //  text controller
@@ -28,12 +23,10 @@ class AuthController extends GetxController {
   // login method
   void login() async {
     try {
-      LoginResponse response = await LoginRepo.signIn(
-        LoginRequest(
-          email: emailLoginController.text.trim(),
-          password: passwordLoginController.text.trim(),
-        ),
-      );
+      LoginResponse response = await LoginRepo.signIn(LoginRequest(
+        email: emailLoginController.text,
+        password: passwordLoginController.text,
+      ));
       if (response.token != null || response.token != '') {
         Get.toNamed(
           RouteManager.goToHomeRoute(),
@@ -93,14 +86,17 @@ class AuthController extends GetxController {
 
   //  sign up method
   void signUp() async {
+    RegisterRequest _registerResquest = RegisterRequest(
+      email: emailSignUpController.text.trim(),
+      name: nameSignUpController.text.trim(),
+      password: passwordSignUpController.text.trim(),
+    );
     try {
-      RegisterResponse response = await SignUpRepo.signUp(
-        RegisterRequest(
-          email: emailSignUpController.text.trim(),
-          name: nameSignUpController.text.trim(),
-          password: passwordSignUpController.text.trim(),
-        ),
-      );
+      var response = await SignUpRepo.signUp(RegisterRequest(
+        email: emailSignUpController.text,
+        name: nameSignUpController.text,
+        password: passwordSignUpController.text,
+      ));
       if (response.verified == false) {
         Get.offAll(VerificationView());
       } else {
