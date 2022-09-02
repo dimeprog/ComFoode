@@ -10,7 +10,7 @@ import '../../../Models/product_model.dart';
 
 class ProductReposistory extends GetxController {
   // variable and getter
-  List<Product> _productList = [];
+  RxList<Product> _productList = <Product>[].obs;
   List<Product> get productList => _productList;
   final Rx<bool> _isLoading = Rx(false);
   Rx<bool> get isLoading => _isLoading;
@@ -31,7 +31,7 @@ class ProductReposistory extends GetxController {
       if (response.statusCode == 200) {
         print(response.body);
         final Json = json.decode(response.body);
-        _productList = Json['products']['data'];
+        _productList.value = Json['products']['data'];
         return _productList;
       } else {
         final json = jsonDecode(response.body);
@@ -41,6 +41,9 @@ class ProductReposistory extends GetxController {
     } catch (err) {
       print("error occurred ${err.toString()}");
       Get.snackbar("Error", 'An Error ocurred,try again');
+      _isLoading.value = false;
     }
   }
 }
+// ////
+

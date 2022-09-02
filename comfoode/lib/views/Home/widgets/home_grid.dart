@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'package:comfoode/data/remote/repository/product_repo.dart';
 import 'package:comfoode/models/product_model.dart';
 import 'package:comfoode/utils/resources/values_manager.dart';
@@ -15,13 +17,26 @@ class HomeGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _productList = _productReposistory.productList;
     return Padding(
       padding: const EdgeInsets.all(AppSize.s10),
-      child: ListView.builder(
-        itemBuilder: (context, index) => HomeItem(
-          product: _productReposistory.productList[index],
-        ),
-        itemCount: 100,
+      child: Obx(
+        () => _productList.isEmpty
+            ? const Center(
+                child: Text(
+                  'No product yet',
+                  style: TextStyle(
+                    fontFamily: 'ConcertOne',
+                    fontSize: 16,
+                  ),
+                ),
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) => HomeItem(
+                  product: _productReposistory.productList[index],
+                ),
+                itemCount: 100,
+              ),
       ),
     );
   }

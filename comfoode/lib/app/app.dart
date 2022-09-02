@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'ComFoode',
       theme: getApplicationTheme(),
       getPages: RouteManager.routes,
-      home: HomeView(),
+      home: SplashView(),
       initialBinding: AppBinding(),
     );
   }

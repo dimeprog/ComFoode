@@ -153,29 +153,9 @@ class AuthRepository extends GetxController {
     } catch (ex) {
       _status(AuthState.Error);
       print("error occurred ${ex.toString()}");
-      Get.snackbar("Error", 'An Error ocurred,try again');
+      Get.snackbar("Error", ex.toString());
     }
   }
-
-  // Future sendOtp({bool isResend = false}) async {
-  //   try {
-  //     final response = await http.post(Uri.parse(AppLinks.sendOtp),
-  //         headers: {"Authorization": "Bearer $userId $pendingToken"});
-
-  //     print("response is ${response.body}");
-  //     if (response.statusCode == 200) {
-  //       final json = jsonDecode(response.body);
-
-  //       pinVerificationId = json['data']['pinId'];
-  //       Get.snackbar("Success", "Otp is sent");
-  //     }
-  //   } catch (ex) {
-  //     print(ex);
-  //   }
-  //   if (!isResend) {
-  //     Get.to(VerificationView());
-  //   }
-  // }
 
   Future verifyOtp(String code) async {
     try {
@@ -209,21 +189,6 @@ class AuthRepository extends GetxController {
       _status(AuthState.Error);
     }
   }
-
-  // Future getAccount(String id) async {
-  //   final response = await http.get(
-  //       Uri.parse(
-  //         "${AppLinks.createAcount}?_id=$id",
-  //       ),
-  //       headers: {"Authorization": "Bearer $token"});
-  //   print("get user detail response ${response.body}");
-  //   if (response.statusCode == 200) {
-  //     final json = jsonDecode(response.body);
-  //     final user = User.fromJson(json['data']);
-  //     _user(user);
-  //     pref!.setUser(user);
-  //   }
-  // }
 
   Future SignOut() async {
     _status(AuthState.UnAuthenticated);
