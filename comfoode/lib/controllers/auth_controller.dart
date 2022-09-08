@@ -85,34 +85,34 @@ class AuthController extends GetxController {
   }
 
   //  sign up method
-  void signUp() async {
-    RegisterRequest _registerResquest = RegisterRequest(
-      email: emailSignUpController.text.trim(),
-      name: nameSignUpController.text.trim(),
-      password: passwordSignUpController.text.trim(),
-    );
-    try {
-      var response = await SignUpRepo.signUp(RegisterRequest(
-        email: emailSignUpController.text,
-        name: nameSignUpController.text,
-        password: passwordSignUpController.text,
-      ));
-      if (response.verified == false) {
-        Get.offAll(VerificationView());
-      } else {
-        Get.offAll(HomeView());
-      }
-      clearTextControllerValue();
-    } catch (err) {
-      Get.snackbar(
-        'Error!',
-        err.toString(),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
-    }
-  }
+  // void signUp() async {
+  //   RegisterRequest _registerResquest = RegisterRequest(
+  //     email: emailSignUpController.text.trim(),
+  //     name: nameSignUpController.text.trim(),
+  //     password: passwordSignUpController.text.trim(),
+  //   );
+  //   try {
+  //     var response = await SignUpRepo.signUp(RegisterRequest(
+  //       email: emailSignUpController.text,
+  //       name: nameSignUpController.text,
+  //       password: passwordSignUpController.text,
+  //     ));
+  //     if (response.verified == false) {
+  //       Get.offAll(VerificationView());
+  //     } else {
+  //       Get.offAll(HomeView());
+  //     }
+  //     clearTextControllerValue();
+  //   } catch (err) {
+  //     Get.snackbar(
+  //       'Error!',
+  //       err.toString(),
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.green,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  // }
 
   // verify otp
   void verifyOtp() async {
