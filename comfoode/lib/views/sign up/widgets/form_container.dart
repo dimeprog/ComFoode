@@ -102,9 +102,9 @@ class FormContainer extends StatelessWidget {
               },
             ),
           ),
-          BottomButton(onPressed: () {
+          BottomButton(onPressed: () async {
             if (_formKey.currentState!.validate()) {
-              _authRepository.SignUp();
+              await _authRepository.SignUp();
             }
           }),
         ],

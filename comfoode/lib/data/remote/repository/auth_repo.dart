@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:comfoode/Models/userErrors.dart';
+import 'package:comfoode/data/remote/Api%20Services/app_execption.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/utils/resources/color_manager.dart';
 import 'package:comfoode/views/Home/home_view.dart';
@@ -90,7 +92,7 @@ class AuthRepository extends GetxController {
       );
 
       print("response is ${response.body} ${response.statusCode}");
-
+      print('signing up');
       if (response.statusCode == 200) {
         Get.snackbar("Success", "Sign up Successful");
         final json = jsonDecode(response.body);
@@ -99,12 +101,21 @@ class AuthRepository extends GetxController {
         Get.offAll(VerificationView());
       } else if (response.statusCode == 400) {
         final json = jsonDecode(response.body);
-        Get.snackbar("Error", json['user']['message']);
+        // final errorList = UserErrors.fromJson(json);
+        final List<UserErrors> errorList = (json['errors'] as List)
+            .map((e) => UserErrors.fromJson(e))
+            .toList();
+
+        Get.snackbar("Error", errorList[0].msg.toString());
         _status(AuthState.Error);
       } else {
         final json = jsonDecode(response.body);
-        String error = json['user']['message'].toString();
-        Get.snackbar("Error", error);
+        print('it me');
+        final List<UserErrors> errorList = (json['errors'] as List)
+            .map((e) => UserErrors.fromJson(e))
+            .toList();
+        print(errorList);
+        Get.snackbar("Error", errorList[0].msg.toString());
         _status(AuthState.Error);
       }
     } catch (ex) {
@@ -143,13 +154,23 @@ class AuthRepository extends GetxController {
         DateTime date = DateTime.now();
         DateTime expireToken = DateTime(date.year, date.month, date.day + 1);
         pref!.setDateTokenExpired(expireToken);
+        final String message = json['user']['message'];
+        Get.snackbar('Success', message);
         _status(AuthState.Authenticated);
         Get.offAll(HomeView());
+      }
+      if (response.statusCode == 401) {
+        final json = jsonDecode(response.body);
+        final String message = json['user']['message'];
+        Get.snackbar("Error", message);
+        _status(AuthState.Error);
       } else {
         final json = jsonDecode(response.body);
         Get.snackbar("Error", json['user']['message']);
         _status(AuthState.Error);
       }
+    } on UnauthorizedExecption {
+      Get.snackbar('Error', 'Unable to login');
     } catch (ex) {
       _status(AuthState.Error);
       print("error occurred ${ex.toString()}");
@@ -192,7 +213,7 @@ class AuthRepository extends GetxController {
 
   Future SignOut() async {
     _status(AuthState.UnAuthenticated);
-    pref!.logout();
-    Get.offAll(HomeView());
+    // pref!.logout();
+    Get.offAll(LoginView());
   }
 }
