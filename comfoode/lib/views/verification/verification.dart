@@ -1,7 +1,9 @@
+import 'package:comfoode/data/remote/repository/auth_repo.dart';
 import 'package:comfoode/views/verification/widgets/otp_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 
 import '../../utils/widgets/app_scaffold.dart';
@@ -13,6 +15,7 @@ import '../../utils/resources/style_manager.dart';
 import '../../utils/resources/values_manager.dart';
 
 class VerificationView extends StatelessWidget {
+  final AuthRepository _authRepository = Get.put(AuthRepository());
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
@@ -88,14 +91,18 @@ class VerificationView extends StatelessWidget {
                   height: getHeight(59),
                   width: getWidth(59),
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Get.toNamed(RouteManager.goToRegSuccesRoute()),
+                    onPressed: () async {
+                      await _authRepository.verifyOtp();
+                      Get.toNamed(RouteManager.goToRegSuccesRoute());
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: ColorManager.lightBlue,
+                      elevation: 8,
+                    ),
                     child: Icon(
                       Icons.arrow_forward,
                       color: ColorManager.white,
                     ),
-                    style: ElevatedButton.styleFrom(
-                        primary: ColorManager.lightBlue, elevation: 8),
                   ),
                 ),
               ),

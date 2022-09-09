@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:comfoode/Models/userErrors.dart';
+import 'package:comfoode/data/remote/Api%20Services/app_execption.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/utils/resources/color_manager.dart';
 import 'package:comfoode/views/Home/home_view.dart';
@@ -30,14 +32,13 @@ class AuthRepository extends GetxController {
   TextEditingController passwordLoginController = TextEditingController();
   TextEditingController passwordSignUpController = TextEditingController();
   TextEditingController nameSignUpController = TextEditingController();
-
   TextEditingController otpController = TextEditingController();
   //  variables and getters
   final Rx<AuthState> _status = Rx(AuthState.Empty);
   Rx<AuthState> get status => _status;
 
   final Rx<String> _Mtoken = Rx('');
-  Rx<String> get Mtoken => _Mtoken;
+  String get Mtoken => _Mtoken.value;
   final Rx<User?> _user = Rx(null);
   User? get user => _user.value;
   Sharepref? pref;
@@ -63,10 +64,10 @@ class AuthRepository extends GetxController {
           print("gotten here is value");
           final user = pref!.getUser()!;
           _user(user);
-          Mtoken(pref!.read());
+          _Mtoken(pref!.read());
 
           _status(AuthState.Authenticated);
-          if (Mtoken.value == "0") {
+          if (_Mtoken.value == "0") {
             _status(AuthState.UnAuthenticated);
           }
         } else {
@@ -82,29 +83,40 @@ class AuthRepository extends GetxController {
       final response = await http.post(
         Uri.parse(AppLinks.BaseUrl + AppLinks.signup),
         body: jsonEncode({
-          "name": nameSignUpController.text,
-          "email": emailSignUpController.text,
-          "password": passwordSignUpController.text,
+          "name": nameSignUpController.text.trim(),
+          "email": emailSignUpController.text.trim(),
+          "password": passwordSignUpController.text.trim(),
         }),
         headers: {"Content-Type": "application/json"},
       );
 
       print("response is ${response.body} ${response.statusCode}");
-
+      print('signing up');
       if (response.statusCode == 200) {
         Get.snackbar("Success", "Sign up Successful");
         final json = jsonDecode(response.body);
         clearTextControllerValue();
         _status(AuthState.Success);
+        pref!.saveUserId(json['user']['data']["userId"]);
+        print(pref!.getuserId());
         Get.offAll(VerificationView());
       } else if (response.statusCode == 400) {
         final json = jsonDecode(response.body);
-        Get.snackbar("Error", json['user']['message']);
+        // final errorList = UserErrors.fromJson(json);
+        final List<UserErrors> errorList = (json['errors'] as List)
+            .map((e) => UserErrors.fromJson(e))
+            .toList();
+
+        Get.snackbar("Error", errorList[0].msg.toString());
         _status(AuthState.Error);
       } else {
         final json = jsonDecode(response.body);
-        String error = json['user']['message'].toString();
-        Get.snackbar("Error", error);
+        print('it me');
+        final List<UserErrors> errorList = (json['errors'] as List)
+            .map((e) => UserErrors.fromJson(e))
+            .toList();
+        print(errorList);
+        Get.snackbar("Error", errorList[0].msg.toString());
         _status(AuthState.Error);
       }
     } catch (ex) {
@@ -123,13 +135,13 @@ class AuthRepository extends GetxController {
   Future SignIn() async {
     _status(AuthState.Loading);
     try {
-      final response = await http.post(
-          Uri.parse(AppLinks.BaseUrl + AppLinks.login),
-          body: jsonEncode({
-            "email": emailLoginController.text,
-            "password": passwordLoginController.text
-          }),
-          headers: {"Content-Type": "application/json"});
+      final response =
+          await http.post(Uri.parse(AppLinks.BaseUrl + AppLinks.login),
+              body: jsonEncode({
+                "email": emailLoginController.text.trim(),
+                "password": passwordLoginController.text.trim()
+              }),
+              headers: {"Content-Type": "application/json"});
       print("login response ${response.body}");
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
@@ -137,19 +149,29 @@ class AuthRepository extends GetxController {
         print(token);
         userId = json['user']['data']['userId'];
         print(userId);
-        Mtoken(token);
+        _Mtoken(token);
         pref!.saveToken(token);
 
         DateTime date = DateTime.now();
         DateTime expireToken = DateTime(date.year, date.month, date.day + 1);
         pref!.setDateTokenExpired(expireToken);
+        final String message = json['user']['message'];
+        Get.snackbar('Success', message);
         _status(AuthState.Authenticated);
         Get.offAll(HomeView());
+      }
+      if (response.statusCode == 401) {
+        final json = jsonDecode(response.body);
+        final String message = json['user']['message'];
+        Get.snackbar("Error", message);
+        _status(AuthState.Error);
       } else {
         final json = jsonDecode(response.body);
         Get.snackbar("Error", json['user']['message']);
         _status(AuthState.Error);
       }
+    } on UnauthorizedExecption {
+      Get.snackbar('Error', 'Unable to login');
     } catch (ex) {
       _status(AuthState.Error);
       print("error occurred ${ex.toString()}");
@@ -157,19 +179,21 @@ class AuthRepository extends GetxController {
     }
   }
 
-  Future verifyOtp(String code) async {
+  Future verifyOtp() async {
     try {
       _status(AuthState.Loading);
-      print("code is $code");
+      // print("code is $code");
       final response =
           await http.post(Uri.parse(AppLinks.BaseUrl + AppLinks.verifyMail),
               body: jsonEncode({
-                "email": emailSignUpController.text,
-                "otp": otpController.text,
+                "email": emailSignUpController.text.trim(),
+                "otp": otpController.text.trim(),
               }));
 
-      print("response is pin verify ${response.body} ${response.statusCode}");
+      print(
+          "response is pin verify ${response.body} ${response.statusCode} ${emailSignUpController.text} ${otpController.text}");
       if (response.statusCode == 200) {
+        _status(AuthState.Success);
         Get.snackbar(
           "Success",
           "Otp verified succesfully",
@@ -177,9 +201,9 @@ class AuthRepository extends GetxController {
           colorText: ColorManager.error,
           duration: const Duration(seconds: 3),
         );
-        _status(AuthState.Success);
         Get.to(SucessfulView());
-      } else {
+      }
+      if (response.statusCode == 400) {
         final json = jsonDecode(response.body);
         Get.snackbar("Error", "${json['user']['message']}");
         _status(AuthState.Error);
@@ -192,7 +216,7 @@ class AuthRepository extends GetxController {
 
   Future SignOut() async {
     _status(AuthState.UnAuthenticated);
-    pref!.logout();
-    Get.offAll(HomeView());
+    // pref!.logout();
+    Get.offAll(LoginView());
   }
 }
