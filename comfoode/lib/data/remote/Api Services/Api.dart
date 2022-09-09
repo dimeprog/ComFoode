@@ -9,15 +9,23 @@ import 'app_execption.dart';
 class ApiClient {
   static const TIMEOUT = 60;
   // Get
-  static Future<http.Response> getData(String apiPath) async {
+  static Future<http.Response> getData(
+    String apiPath, {
+    Map<String, String>? headers,
+  }) async {
     var url = Uri.parse(AppLinks.BaseUrl + apiPath);
-    final reponse =
-        await http.get(url).timeout(const Duration(seconds: TIMEOUT));
+    final reponse = await http
+        .get(url, headers: headers)
+        .timeout(const Duration(seconds: TIMEOUT));
     return processResponse(reponse);
   }
 
 // Post
-  static Future<http.Response> postData(String apiPath, dynamic load) async {
+  static Future<http.Response> postData(
+    String apiPath,
+    dynamic load, {
+    Map<String, String>? headers,
+  }) async {
     var url = Uri.parse(AppLinks.BaseUrl + apiPath);
     var response = await http
         .post(

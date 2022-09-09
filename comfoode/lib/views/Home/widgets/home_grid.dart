@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'package:comfoode/Models/product_model.dart';
 import 'package:comfoode/data/remote/repository/product_repo.dart';
 import 'package:comfoode/models/product_model.dart';
 import 'package:comfoode/utils/resources/values_manager.dart';
@@ -33,9 +34,9 @@ class HomeGridView extends StatelessWidget {
               )
             : ListView.builder(
                 itemBuilder: (context, index) => HomeItem(
-                  product: _productReposistory.productList[index],
+                  product: _productList[index],
                 ),
-                itemCount: 100,
+                itemCount: _productList.length,
               ),
       ),
     );

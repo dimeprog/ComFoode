@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:comfoode/data/local/shared_pref.dart';
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
+import 'package:comfoode/helpers/user_token_generator.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 
@@ -24,14 +25,19 @@ class ProductReposistory extends GetxController {
 
   Future fetchProduct() async {
     String userId = pref!.getuserId();
+    print(userId);
     isLoading.value = true;
     try {
-      final response =
-          await ApiClient.getData(AppLinks.BaseUrl + '/user/$userId/products');
+      final response = await ApiClient.getData(
+        AppLinks.BaseUrl + '/user/$userId/products',
+        headers: Authorization.getAuthorization(),
+      );
       if (response.statusCode == 200) {
         print(response.body);
         final Json = json.decode(response.body);
-        _productList.value = Json['products']['data'];
+        _productList.value = (Json['products']['data'] as List)
+            .map((e) => Product.fromJson(e))
+            .toList();
         return _productList;
       } else {
         final json = jsonDecode(response.body);
