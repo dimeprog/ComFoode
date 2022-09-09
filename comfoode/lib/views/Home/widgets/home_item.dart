@@ -5,7 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../Models/product_model.dart';
+import '../../../models/product_model.dart';
 import '../../../utils/resources/color_manager.dart';
 import '../../../utils/resources/dimension_manager.dart';
 

@@ -1,4 +1,4 @@
-import 'package:comfoode/Models/product_model.dart';
+import 'package:comfoode/models/product_model.dart';
 import 'package:get/get.dart';
 
 class ProductController extends GetxController {
