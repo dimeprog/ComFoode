@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 
-import '../../../Models/register_model.dart';
+import '../../../models/register_model.dart';
 
 class VerifyOtpRepo {
   static Future<RegisterResponse> vertifyOtp(String email, String otp) async {

@@ -1,3 +1,5 @@
+import 'package:comfoode/models/product_model.dart';
+import 'package:comfoode/views/details/details_screen.dart';
 import 'package:comfoode/views/sign%20up/signup.dart';
 import 'package:comfoode/views/verification/verification.dart';
 import 'package:get/get.dart';
@@ -13,6 +15,7 @@ class RouteManager {
   static const String onBoardRoute = '/onboard';
   static const String onLoginRoute = '/login';
   static const String onSignUpRoute = '/sign-up';
+  static const String onDetailProductRoute = '/detail-product';
 
   static const String onRegisterSuccessRoute = '/register_sucess';
   static const String onHomeRoute = '/home';
@@ -24,6 +27,7 @@ class RouteManager {
   static String goTosplashRoute() => splashRoute;
   static String goToLoginRoute() => onLoginRoute;
   static String goToSignUpRoute() => onSignUpRoute;
+  static String goToDetailProductRoute() => onDetailProductRoute;
 
   static String goToRegSuccesRoute() => onRegisterSuccessRoute;
   static String goToHomeRoute() => onHomeRoute;
@@ -59,6 +63,10 @@ class RouteManager {
     GetPage(
       name: onVerificationRoute,
       page: () => VerificationView(),
+    ),
+    GetPage(
+      name: onDetailProductRoute,
+      page: () => const DetailsScreen(),
     ),
   ];
 }

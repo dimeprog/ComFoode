@@ -73,7 +73,7 @@ class OnBoardingView extends StatelessWidget {
             ButtonContainer(
               title: 'Continue',
               buttonFunction: () {
-                Get.toNamed(RouteManager.goToSignUpRoute());
+                Get.toNamed(RouteManager.goToLoginRoute());
               },
             ),
             SizedBox(

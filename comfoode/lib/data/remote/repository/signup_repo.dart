@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 
-import '../../../Models/register_model.dart';
+import '../../../models/register_model.dart';
 import '../Api Services/constant.dart';
 
 class SignUpRepo {

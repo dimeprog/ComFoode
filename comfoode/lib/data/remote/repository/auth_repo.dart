@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:comfoode/Models/userErrors.dart';
+import 'package:comfoode/models/userErrors.dart';
 import 'package:comfoode/data/remote/Api%20Services/app_execption.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/utils/resources/color_manager.dart';
@@ -37,7 +37,7 @@ class AuthRepository extends GetxController {
   final Rx<AuthState> _status = Rx(AuthState.Empty);
   Rx<AuthState> get status => _status;
 
-  final Rx<String> _Mtoken = Rx('');
+  Rx<String> _Mtoken = ''.obs;
   String get Mtoken => _Mtoken.value;
   final Rx<User?> _user = Rx(null);
   User? get user => _user.value;
@@ -146,12 +146,12 @@ class AuthRepository extends GetxController {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         final token = json['user']['data']['token'];
-        print(token);
         userId = json['user']['data']['userId'];
-        print(userId);
-        _Mtoken(token);
+        pref!.saveUserId(userId!);
+        _Mtoken.value = token;
         pref!.saveToken(token);
-
+        print(Mtoken);
+        print(pref!.getuserId());
         DateTime date = DateTime.now();
         DateTime expireToken = DateTime(date.year, date.month, date.day + 1);
         pref!.setDateTokenExpired(expireToken);

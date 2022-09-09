@@ -1,5 +1,5 @@
 import 'package:comfoode/models/login_model.dart';
-import '../Models/register_model.dart';
+import '../models/register_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
