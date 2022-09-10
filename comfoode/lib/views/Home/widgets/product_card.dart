@@ -61,12 +61,13 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.shopping_cart_rounded,
-                        size: 32,
-                        color: Colors.orange,
-                      )),
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.add_shopping_cart,
+                      size: 28,
+                      color: Colors.yellow,
+                    ),
+                  ),
                 ],
               ),
             ),

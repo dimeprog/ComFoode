@@ -30,14 +30,7 @@ class HomeGridView extends StatelessWidget {
                     ),
                   ),
                 )
-              :
-              // ListView.builder(
-              //     itemBuilder: (context, index) => HomeItem(
-              //       product: _productList[index],
-              //     ),
-              //     itemCount: _productList.length,
-              //   ),
-              GridView.builder(
+              : GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.75,

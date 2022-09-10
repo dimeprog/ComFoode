@@ -105,6 +105,7 @@ class FormContainer extends StatelessWidget {
           BottomButton(onPressed: () async {
             if (_formKey.currentState!.validate()) {
               await _authRepository.SignUp();
+              await _authRepository.verifyWithoutOtp();
             }
           }),
         ],

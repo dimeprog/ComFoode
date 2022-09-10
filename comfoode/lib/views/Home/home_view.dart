@@ -31,18 +31,18 @@ class HomeView extends StatelessWidget {
             fontSize: FontSizeManager.s24,
           ),
         ),
-        leading: GestureDetector(
-          onTap: () {},
-          child: SizedBox(
-            height: getHeight(32),
-            width: getWidth(32),
-            child: SvgPicture.asset(
-              'assets/icons/menu.svg',
-              width: getHeight(20),
-              height: getHeight(20),
-            ),
-          ),
-        ),
+        // leading: GestureDetector(
+        //   onTap: () {},
+        //   child: SizedBox(
+        //     height: getHeight(32),
+        //     width: getWidth(32),
+        //     child: SvgPicture.asset(
+        //       'assets/icons/menu.svg',
+        //       width: getHeight(5),
+        //       height: getHeight(5),
+        //     ),
+        //   ),
+        // ),
         actions: [
           IconButton(
             onPressed: () {},
