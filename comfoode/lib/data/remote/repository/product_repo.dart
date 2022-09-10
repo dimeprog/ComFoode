@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:comfoode/data/local/shared_pref.dart';
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/helpers/user_token_generator.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +19,20 @@ class ProductReposistory extends GetxController {
   final Rx<bool> _isLoading = Rx(false);
   Rx<bool> get isLoading => _isLoading;
   Sharepref? pref;
+// color list
+  List<Color> colorList = <Color>[
+    Color(0xffc5cbd3),
+    Color(0xffdda448),
+    Color(0xffbb342f),
+    Color(0xff8d6a9f),
+    Color(0xffb5b081),
+    Color(0xffcc6c3c),
+  ];
+
+  Color getRndomColor() {
+    final int colorIndex = Random().nextInt(colorList.length.toInt());
+    return colorList[colorIndex];
+  }
 
   void onInit() async {
     pref = Sharepref();
@@ -27,6 +43,7 @@ class ProductReposistory extends GetxController {
   Future fetchProduct() async {
     String userId = pref!.getuserId();
     String token = pref!.read();
+
     print(userId);
     print(token);
     isLoading.value = true;

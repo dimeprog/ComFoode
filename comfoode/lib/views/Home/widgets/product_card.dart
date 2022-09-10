@@ -1,3 +1,5 @@
+import 'package:comfoode/data/remote/repository/product_repo.dart';
+import 'package:comfoode/views/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,15 +17,15 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final colorCode = Get.find<ProductReposistory>().getRndomColor();
     return GestureDetector(
-      onTap: () => Get.toNamed(RouteManager.goToDetailProductRoute(),
-          arguments: product),
+      onTap: () => Get.to(DetailsScreen(product: product)),
       child: Container(
         width: 154,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: ColorManager.productColor,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: Column(
           children: [

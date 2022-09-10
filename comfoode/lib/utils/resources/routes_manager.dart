@@ -1,4 +1,5 @@
 import 'package:comfoode/models/product_model.dart';
+import 'package:comfoode/views/cart/cart_page.dart';
 import 'package:comfoode/views/details/details_screen.dart';
 import 'package:comfoode/views/sign%20up/signup.dart';
 import 'package:comfoode/views/verification/verification.dart';
@@ -21,6 +22,7 @@ class RouteManager {
   static const String onHomeRoute = '/home';
 
   static const String onVerificationRoute = '/verification_Expired';
+  static const String onCartPageRoute = '/cart-page';
 
   //  route functions
   static String goToOnboardingRoute() => onBoardRoute;
@@ -28,6 +30,7 @@ class RouteManager {
   static String goToLoginRoute() => onLoginRoute;
   static String goToSignUpRoute() => onSignUpRoute;
   static String goToDetailProductRoute() => onDetailProductRoute;
+  static String goToCartPageRoute() => onCartPageRoute;
 
   static String goToRegSuccesRoute() => onRegisterSuccessRoute;
   static String goToHomeRoute() => onHomeRoute;
@@ -64,9 +67,13 @@ class RouteManager {
       name: onVerificationRoute,
       page: () => VerificationView(),
     ),
+    // GetPage(
+    //   name: onDetailProductRoute,
+    //   page: () => ,
+    // ),
     GetPage(
-      name: onDetailProductRoute,
-      page: () => const DetailsScreen(),
+      name: onCartPageRoute,
+      page: () => CartPage(),
     ),
   ];
 }

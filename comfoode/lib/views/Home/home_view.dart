@@ -1,6 +1,8 @@
+import 'package:comfoode/utils/resources/routes_manager.dart';
 import 'package:comfoode/views/Home/widgets/home_drawer.dart';
 import 'package:comfoode/views/Home/widgets/home_grid.dart';
 import 'package:comfoode/views/Home/widgets/home_price_tag.dart';
+import 'package:comfoode/views/cart/cart_page.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -45,7 +47,9 @@ class HomeView extends StatelessWidget {
         // ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => CartPage());
+            },
             icon: Icon(
               Icons.shopping_cart_rounded,
               color: ColorManager.amber,
