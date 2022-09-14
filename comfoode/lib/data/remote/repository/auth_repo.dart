@@ -101,8 +101,8 @@ class AuthRepository extends GetxController {
         _status(AuthState.Success);
         pref!.saveUserId(json['user']['data']["userId"]);
         print(pref!.getuserId());
-        final otp = json['user']['data']['otp'] as String;
-        pref!.saveOtp(otp);
+        _otp.value = json['user']['data']['otp'] as String;
+        pref!.saveOtp(_otp.value);
         print(otp);
         final email = json['user']['data']['email'] as String;
         pref!.saveEmail(email);

@@ -3,5 +3,6 @@ class AppLinks {
   static const String signup = '/user/register';
   static const String login = '/user/login';
   static const String verifyMail = '/user/verify-email';
-  static const String product = '/user/';
+  // static const String product = '/user/$userId/products';
+  static const String addToCart = '/user/cart/add-item';
 }

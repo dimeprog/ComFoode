@@ -15,16 +15,19 @@ class ProductCard extends StatelessWidget {
   });
   final Product product;
 
+  final colorCode = Get.find<ProductReposistory>().getRndomColor();
   @override
   Widget build(BuildContext context) {
-    // final colorCode = Get.find<ProductReposistory>().getRndomColor();
     return GestureDetector(
-      onTap: () => Get.to(DetailsScreen(product: product)),
+      onTap: () => Get.to(() => DetailsScreen(
+            product: product,
+            colorCode: colorCode,
+          )),
       child: Container(
         width: 154,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: ColorManager.productColor,
+          color: colorCode,
           borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: Column(
@@ -34,7 +37,7 @@ class ProductCard extends StatelessWidget {
               height: 140,
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               decoration: BoxDecoration(
-                color: ColorManager.productColor,
+                color: colorCode,
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
               ),
               child: Center(

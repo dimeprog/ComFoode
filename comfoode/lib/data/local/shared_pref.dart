@@ -65,6 +65,17 @@ class Sharepref {
     return otp ?? '';
   }
 
+  // Save orderid
+  void saveOrderId(String orderId) {
+    _preferences!.setString('orderId', orderId);
+  }
+
+  // get orderId
+  String getOrderId() {
+    final String? orderId = _preferences!.getString('orderId');
+    return orderId ?? 'not yet avaiable ';
+  }
+
 // ////////////////////////////
   saveToken(String value) {
     _preferences!.setString("token", value);

@@ -15,7 +15,10 @@ class ApiClient {
   }) async {
     var url = Uri.parse(AppLinks.BaseUrl + apiPath);
     final reponse = await http
-        .get(url, headers: headers)
+        .get(
+          url,
+          headers: headers,
+        )
         .timeout(const Duration(seconds: TIMEOUT));
     return processResponse(reponse);
   }
@@ -31,6 +34,7 @@ class ApiClient {
         .post(
           url,
           body: jsonEncode(load),
+          headers: headers,
         )
         .timeout(const Duration(seconds: TIMEOUT));
     return processResponse(response);

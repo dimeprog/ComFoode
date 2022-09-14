@@ -1,9 +1,12 @@
 import 'dart:math';
 
+import 'package:comfoode/data/remote/repository/cart_repo.dart';
 import 'package:comfoode/utils/resources/color_manager.dart';
 import 'package:comfoode/utils/resources/dimension_manager.dart';
 import 'package:comfoode/utils/resources/font_manager.dart';
 import 'package:comfoode/utils/resources/style_manager.dart';
+import 'package:comfoode/utils/widgets/no_of%20_items_cart.dart';
+import 'package:comfoode/views/cart/cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -14,143 +17,122 @@ import 'components/color_dot.dart';
 
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({
-    // required this.colorCode,
+    required this.colorCode,
     required this.product,
     Key? key,
   }) : super(key: key);
   final Product product;
-  // final Color colorCode;
-  final colorCode = Get.find<ProductReposistory>().getRndomColor();
+  final Color colorCode;
+  final ProductReposistory _productReposistory = Get.find<ProductReposistory>();
+  final CartRespository _cartRespository = Get.put(CartRespository());
 //
   @override
   Widget build(BuildContext context) {
-    // final containerColor = colorCode;
+    _productReposistory.initProduct(_cartRespository);
+    // _cartRespository.intCart();
+
     return Scaffold(
-      backgroundColor: ColorManager.primary,
+      backgroundColor: Colors.white,
       appBar: AppBar(
         // mainAxisAlignment:MainAxisAlignment.spaceBetween,
-        backgroundColor: ColorManager.primary,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        leading: const BackButton(color: Colors.black),
+        leading: const BackButton(color: Colors.grey),
         actions: [
           CircleAvatar(
             radius: getHeight(32),
             backgroundColor: Colors.grey.shade50,
-            child: IconButton(
-              icon: const Icon(
-                Icons.shopping_cart,
-                color: Colors.amber,
+            child: Center(
+              child: NoOfItemCartIcon(
+                cartColor: Colors.amber,
+                press: () => Get.to(() => CartPage()),
               ),
-              onPressed: () {},
             ),
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Card(
-                elevation: 10,
-                color: colorCode,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: getWidth(20)),
-                  height: getHeight(150),
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      getHeight(20),
-                    ),
-                    color: colorCode,
+        child: Column(
+          children: [
+            Card(
+              elevation: 6,
+              color: colorCode,
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: getWidth(20)),
+                height: getHeight(150),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    getHeight(20),
                   ),
-                  child: Center(
-                    child: Text(
-                      product.name!,
-                      style: TextStyle(
-                          fontFamily: 'ConcertOne',
-                          fontSize: getHeight(50),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
+                  color: colorCode,
+                ),
+                child: Center(
+                  child: Text(
+                    product.name!,
+                    style: TextStyle(
+                        fontFamily: 'ConcertOne',
+                        fontSize: getHeight(50),
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            Container(
+              height: getHeight(600),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(getHeight(120)),
+                ),
+                color: colorCode.withOpacity(0.2),
+              ),
+            ),
+          ],
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          height: getHeight(250),
-          padding: EdgeInsets.all(getHeight(40)),
-          // margin: EdgeInsets.all(getHeight(10)),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              getHeight(30),
-            ),
-            color: ColorManager.productColor,
+      bottomNavigationBar: Container(
+        color: colorCode.withOpacity(0.2),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: getWidth(8),
+            right: getWidth(8),
+            bottom: getHeight(8),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                padding: EdgeInsets.only(
-                  left: getWidth(20) * 2.5,
-                  right: getWidth(20) * 2.5,
-                  top: getHeight(20),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        // controller.setQuantity(false);
-                      },
-                      child: Icon(
-                        size: getHeight(24),
-                        Icons.remove,
-                        color: ColorManager.productColor,
-                      ),
-                    ),
-                    Text(
-                      "\$ ${product.price!}",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: getHeight(26),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // controller.setQuantity(true);
-                      },
-                      child: Icon(
-                        Icons.add,
-                        size: getHeight(24),
-                        color: ColorManager.productColor,
-                      ),
-                    ),
-                  ],
-                ),
+          child: Container(
+            height: getHeight(250),
+            padding: EdgeInsets.all(getHeight(40)),
+            // margin: EdgeInsets.all(getHeight(10)),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                getHeight(80),
               ),
-              Container(
-                height: getHeight(70),
-                width: double.maxFinite,
-                padding: EdgeInsets.only(
-                  top: getHeight(20),
-                  bottom: getHeight(20),
-                  left: getWidth(20),
-                  right: getWidth(20),
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(getHeight(40)),
-                    topRight: Radius.circular(getHeight(40)),
+              color: Colors.white,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(
+                    left: getWidth(20) * 2.5,
+                    right: getWidth(20) * 2.5,
+                    top: getHeight(20),
                   ),
-                  color: ColorManager.primary,
+                  child: Row(
+                    children: [
+                      Obx(() {
+                        return Text(
+                          "\$${product.price!} X ${_productReposistory.quantity}",
+                          style: TextStyle(
+                              color: ColorManager.black,
+                              fontSize: getHeight(32),
+                              fontWeight: FontWeight.w500),
+                        );
+                      }),
+                    ],
+                  ),
                 ),
-                child: Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Minus, Plus and Counting of Food
@@ -161,39 +143,74 @@ class DetailsScreen extends StatelessWidget {
                         left: getWidth(20),
                         right: getWidth(20),
                       ),
-                      // height: Dimensions.height1 * 200,
-                      // width: Dimensions.width1 * 120,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(getHeight(20)),
                         color: Colors.white,
                       ),
-                      child: Icon(
-                        Icons.favorite,
-                        color: ColorManager.primary,
+                      child: Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _productReposistory.setQuantity(false);
+                            },
+                            child: Icon(
+                              size: getHeight(32),
+                              Icons.remove,
+                              color: Colors.amber,
+                            ),
+                          ),
+                          SizedBox(
+                            width: getWidth(2),
+                          ),
+                          Obx(() {
+                            return Text(
+                              _productReposistory.quantity.toString(),
+                              style: getBoldTextStyle(
+                                color: Colors.black,
+                                fontSize: FontSizeManager.s18,
+                              ),
+                            );
+                          }),
+                          SizedBox(
+                            width: getWidth(2),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              _productReposistory.setQuantity(true);
+                            },
+                            child: Icon(
+                              Icons.add,
+                              size: getHeight(32),
+                              color: Colors.amber,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
                     // Add Button
                     SizedBox(
                       width: getWidth(200),
-                      height: getHeight(48),
+                      height: getHeight(100),
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _productReposistory.addItemToCart(product);
+                        },
                         style: ElevatedButton.styleFrom(
                             primary: colorCode, shape: const StadiumBorder()),
                         child: Text(
                           "Add to Cart",
                           style: getSemiBoldTextStyle(
                             color: Colors.white,
-                            fontSize: FontSizeManager.s18,
+                            fontSize: FontSizeManager.s24,
                           ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -202,67 +219,4 @@ class DetailsScreen extends StatelessWidget {
 }
 
 //
-// Widget _buildCustomScrollview() {
-//   return CustomScrollView(
-//     slivers: [
-//       SliverAppBar(
-//         backgroundColor: Colors.white,
-//         elevation: 0,
-//         leading: const BackButton(color: Colors.black),
-//         actions: [
-//           CircleAvatar(
-//             radius: getHeight(32),
-//             backgroundColor: Colors.grey.shade50,
-//             child: IconButton(
-//               icon: const Icon(
-//                 Icons.shopping_cart,
-//                 color: Colors.amber,
-//               ),
-//               onPressed: () {},
-//             ),
-//           )
-//         ],
-//       ),
-//       SliverToBoxAdapter(
-//         child: Container(
-//           child: Column(children: [
-//             Card(
-//               elevation: 10,
-//               child: Container(
-//                 margin: EdgeInsets.symmetric(horizontal: getWidth(20)),
-//                 height: getHeight(500),
-//                 color: colorCode,
-//                 child: Text(
-//                   product.name!,
-//                   style: TextStyle(
-//                     fontFamily: 'ConcertOne',
-//                     fontSize: getHeight(25),
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             SizedBox(
-//               height: getHeight(30),
-//             ),
-//             Expanded(
-//               child: Container(
-//                 color: Colors.white,
-//                 child: Row(children: [
-//                   Text(
-//                     product.price!.toString(),
-//                     style: getBoldTextStyle(
-//                       color: ColorManager.lightBlue,
-//                       fontSize: FontSizeManager.s20,
-//                     ),
-//                   )
-//                 ]),
-//               ),
-//             )
-//           ]),
-//         ),
-//       )
-//     ],
-//   );
-// }
 //
