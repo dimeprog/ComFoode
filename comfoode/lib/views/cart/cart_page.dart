@@ -23,13 +23,13 @@ class CartPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          title: Text(
-            'Cart List',
-            style: getBoldTextStyle(
-              color: Colors.black54,
-              fontSize: 20,
-            ),
-          ),
+          // // title: Text(
+          // //   'Carts',
+          // //   style: getBoldTextStyle(
+          // //     color: Colors.black54,
+          // //     fontSize: 20,
+          // //   ),
+          // ),
           centerTitle: true,
         ),
         backgroundColor: ColorManager.primary,
@@ -37,12 +37,17 @@ class CartPage extends StatelessWidget {
           onRefresh: () async {
             await _cartRespository.fetchPendingCarts();
           },
-          child: ListView.builder(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            itemBuilder: (context, index) => const CartCard(),
-            itemCount: _cartList.length,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const BouncingScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              itemBuilder: (context, index) => CartCard(
+                cartSmaple: _cartList[index],
+              ),
+              itemCount: _cartList.length,
+            ),
           ),
         ));
   }
