@@ -43,6 +43,40 @@ class Sharepref {
     return value ?? '';
   }
 
+  //  set sign up Email
+  void saveEmail(String email) {
+    _preferences!.setString('signupemail', email);
+  }
+
+  // save otp
+  void saveOtp(String otp) {
+    _preferences!.setString('otp', otp);
+  }
+
+  //  get sig up email
+  String getEmail() {
+    final String? email = _preferences!.getString('signupemail');
+    return email ?? '';
+  }
+
+  //  get otp
+  String getOtp() {
+    final String? otp = _preferences!.getString('otp');
+    return otp ?? '';
+  }
+
+  // Save orderid
+  void saveOrderId(String orderId) {
+    _preferences!.setString('orderId', orderId);
+  }
+
+  // get orderId
+  String getOrderId() {
+    final String? orderId = _preferences!.getString('orderId');
+    return orderId ?? 'not yet avaiable ';
+  }
+
+// ////////////////////////////
   saveToken(String value) {
     _preferences!.setString("token", value);
   }

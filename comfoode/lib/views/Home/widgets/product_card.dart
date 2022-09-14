@@ -1,3 +1,5 @@
+import 'package:comfoode/data/remote/repository/product_repo.dart';
+import 'package:comfoode/views/details/details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,17 +15,20 @@ class ProductCard extends StatelessWidget {
   });
   final Product product;
 
+  final colorCode = Get.find<ProductReposistory>().getRndomColor();
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.toNamed(RouteManager.goToDetailProductRoute(),
-          arguments: product),
+      onTap: () => Get.to(() => DetailsScreen(
+            product: product,
+            colorCode: colorCode,
+          )),
       child: Container(
         width: 154,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: ColorManager.productColor,
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          color: colorCode,
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         child: Column(
           children: [
@@ -32,7 +37,7 @@ class ProductCard extends StatelessWidget {
               height: 140,
               padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               decoration: BoxDecoration(
-                color: ColorManager.productColor,
+                color: colorCode,
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
               ),
               child: Center(
@@ -61,12 +66,13 @@ class ProductCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.shopping_cart_rounded,
-                        size: 32,
-                        color: Colors.orange,
-                      )),
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.add_shopping_cart,
+                      size: 28,
+                      color: Colors.yellow,
+                    ),
+                  ),
                 ],
               ),
             ),

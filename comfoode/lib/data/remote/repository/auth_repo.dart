@@ -45,6 +45,8 @@ class AuthRepository extends GetxController {
   bool? isVerified;
   String? userId;
   String? pinVerificationId;
+  Rx<String> _otp = ''.obs;
+  String get otp => _otp.value;
 
   @override
   Future<void> onInit() async {
@@ -99,7 +101,12 @@ class AuthRepository extends GetxController {
         _status(AuthState.Success);
         pref!.saveUserId(json['user']['data']["userId"]);
         print(pref!.getuserId());
-        Get.offAll(VerificationView());
+        _otp.value = json['user']['data']['otp'] as String;
+        pref!.saveOtp(_otp.value);
+        print(otp);
+        final email = json['user']['data']['email'] as String;
+        pref!.saveEmail(email);
+        _status(AuthState.Success);
       } else if (response.statusCode == 400) {
         final json = jsonDecode(response.body);
         // final errorList = UserErrors.fromJson(json);
@@ -152,6 +159,7 @@ class AuthRepository extends GetxController {
         pref!.saveToken(token);
         print(Mtoken);
         print(pref!.getuserId());
+        // final otp = json['user']['data']['otp'];
         DateTime date = DateTime.now();
         DateTime expireToken = DateTime(date.year, date.month, date.day + 1);
         pref!.setDateTokenExpired(expireToken);
@@ -176,6 +184,45 @@ class AuthRepository extends GetxController {
       _status(AuthState.Error);
       print("error occurred ${ex.toString()}");
       Get.snackbar("Error", ex.toString());
+    }
+  }
+
+  Future verifyWithoutOtp() async {
+    final email = pref!.getEmail();
+    final otp = pref!.getOtp();
+    try {
+      _status(AuthState.Loading);
+      // print("code is $code");
+      final response = await http.post(
+        Uri.parse(AppLinks.BaseUrl + AppLinks.verifyMail),
+        body: jsonEncode({
+          "email": email,
+          "otp": otp,
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+
+      if (response.statusCode == 200) {
+        final json = jsonDecode(response.body);
+        print(json);
+        _status(AuthState.Success);
+        Get.snackbar(
+          "Success",
+          "Otp verified succesfully",
+          backgroundColor: ColorManager.amber,
+          colorText: ColorManager.error,
+          duration: const Duration(seconds: 3),
+        );
+        Get.to(SucessfulView());
+      }
+      if (response.statusCode == 400) {
+        final json = jsonDecode(response.body);
+        Get.snackbar("Error", "${json['user']['message']}");
+        _status(AuthState.Error);
+      }
+    } catch (err) {
+      Get.snackbar("Error", "Verification cannot be completed");
+      _status(AuthState.Error);
     }
   }
 

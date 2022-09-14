@@ -32,7 +32,7 @@ class DialogHelper {
               ),
               Text(content,
                   style: getMediumTextStyle(
-                    color: ColorManager.white,
+                    color: ColorManager.black,
                     fontSize: FontSizeManager.s16,
                   )),
               ElevatedButton(
@@ -41,7 +41,7 @@ class DialogHelper {
                 },
                 child: Text('Okay',
                     style: getMediumTextStyle(
-                      color: ColorManager.lightBlue,
+                      color: ColorManager.white,
                       fontSize: FontSizeManager.s15,
                     )),
               ),
