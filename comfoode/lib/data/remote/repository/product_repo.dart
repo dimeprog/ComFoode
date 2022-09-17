@@ -1,5 +1,5 @@
-import 'dart:convert';
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:comfoode/data/local/shared_pref.dart';
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
@@ -100,6 +100,32 @@ class ProductReposistory extends GetxController {
     await pref!.init();
     await fetchProduct();
     await fetchCartList();
+  }
+
+  // getproductfromId
+  Product getProductFromId(String id) {
+    final products = productList;
+    print(products);
+    // products.
+    final Product selectedProduct = products.firstWhere(
+      (prod) {
+        final result = prod.id == id.toString();
+        print(result);
+        return result;
+      },
+      orElse: () => Product(
+        id: 'ue6e67w9w7w6w',
+        createdAt: DateTime.now(),
+        initialQuantity: 9,
+        name: 'spoon',
+        price: 1500,
+        soldQuantity: 7,
+        updatedAt: DateTime(2021, 7, 2),
+        v: 0,
+      ),
+    );
+    print(selectedProduct.name.toString());
+    return selectedProduct;
   }
 
 //additem

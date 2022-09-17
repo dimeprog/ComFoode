@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/data/remote/repository/auth_repo.dart';
+import 'package:comfoode/data/remote/repository/product_repo.dart';
 import 'package:comfoode/helpers/dialog_helper.dart';
 import 'package:comfoode/helpers/user_token_generator.dart';
 import 'package:comfoode/models/product_model.dart';
@@ -23,6 +24,8 @@ enum Status {
 }
 
 class CartRespository extends GetxController {
+  // late ProductReposistory _productReposistory;
+  // final ProductReposistory _productReposistory = Get.put(ProductReposistory());
 // getters and variable
   Cart? _cart;
   Cart get cart => _cart!;
@@ -45,8 +48,11 @@ class CartRespository extends GetxController {
     await fetchPendingCarts();
   }
 
-  // void intCart() async {
-  //   await fetchPendingCarts();
+  // Product getProduct(String id) {
+  //   final products = _productReposistory.productList;
+  //   final Product selectedProduct =
+  //       products.firstWhere((prod) => prod.id == id);
+  //   return selectedProduct;
   // }
 
   int getCartItems() {

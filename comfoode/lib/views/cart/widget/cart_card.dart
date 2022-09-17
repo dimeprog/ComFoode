@@ -1,8 +1,10 @@
 import 'package:comfoode/utils/resources/font_manager.dart';
 import 'package:comfoode/utils/resources/style_manager.dart';
+import 'package:comfoode/views/cart%20details/cart_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
 
 import '../../../models/cart_model.dart';
 import '../../../utils/resources/dimension_manager.dart';
@@ -21,7 +23,11 @@ class CartCard extends StatelessWidget {
         bottom: 20,
       ),
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          Get.to(() => CartDetailScreen(
+                cart: cartSmaple,
+              ));
+        },
         child: Card(
           elevation: 3,
           color: Colors.white,

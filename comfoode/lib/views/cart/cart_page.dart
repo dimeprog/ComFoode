@@ -23,13 +23,6 @@ class CartPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          // // title: Text(
-          // //   'Carts',
-          // //   style: getBoldTextStyle(
-          // //     color: Colors.black54,
-          // //     fontSize: 20,
-          // //   ),
-          // ),
           centerTitle: true,
         ),
         backgroundColor: ColorManager.primary,
