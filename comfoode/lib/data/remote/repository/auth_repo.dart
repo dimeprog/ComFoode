@@ -142,13 +142,16 @@ class AuthRepository extends GetxController {
   Future SignIn() async {
     _status(AuthState.Loading);
     try {
-      final response =
-          await http.post(Uri.parse(AppLinks.BaseUrl + AppLinks.login),
-              body: jsonEncode({
-                "email": emailLoginController.text.trim(),
-                "password": passwordLoginController.text.trim()
-              }),
-              headers: {"Content-Type": "application/json"});
+      final response = await http.post(
+        Uri.parse(AppLinks.BaseUrl + AppLinks.login),
+        body: jsonEncode({
+          "email": emailLoginController.text.trim(),
+          "password": passwordLoginController.text.trim()
+        }),
+        headers: {"Content-Type": "application/json"},
+      );
+      pref!.saveEmail(emailLoginController.text.trim());
+
       print("login response ${response.body}");
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
@@ -159,7 +162,9 @@ class AuthRepository extends GetxController {
         pref!.saveToken(token);
         print(Mtoken);
         print(pref!.getuserId());
-        // final otp = json['user']['data']['otp'];
+        // final email = json['user']['data']['email'];
+        // print(email);
+        // pref!.saveEmail(email);
         DateTime date = DateTime.now();
         DateTime expireToken = DateTime(date.year, date.month, date.day + 1);
         pref!.setDateTokenExpired(expireToken);

@@ -53,7 +53,12 @@ class Sharepref {
     _preferences!.setString('otp', otp);
   }
 
-  //  get sig up email
+  // save wallet balance
+  void saveWalletBalance(int balance) {
+    _preferences!.setInt('balance', balance);
+  }
+
+  //  get sign up email
   String getEmail() {
     final String? email = _preferences!.getString('signupemail');
     return email ?? '';
@@ -63,6 +68,13 @@ class Sharepref {
   String getOtp() {
     final String? otp = _preferences!.getString('otp');
     return otp ?? '';
+  }
+
+  // get wallet balance
+  int getWalletBalance() {
+    final int? balance = _preferences!.getInt('balance');
+    final bal = balance;
+    return bal ?? 0;
   }
 
   // Save orderid

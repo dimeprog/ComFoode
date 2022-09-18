@@ -1,11 +1,12 @@
-import 'dart:convert';
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:comfoode/data/local/shared_pref.dart';
 import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/data/remote/repository/auth_repo.dart';
 import 'package:comfoode/data/remote/repository/cart_repo.dart';
+import 'package:comfoode/data/remote/repository/payment_repo.dart';
 import 'package:comfoode/helpers/user_token_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import '../../../models/product_model.dart';
 
 class ProductReposistory extends GetxController {
   final CartRespository _cartRepository = Get.put(CartRespository());
+  final PaymentRepository _paymentRepository = Get.put(PaymentRepository());
 
   // variable and getter
   RxList<Product> _productList = <Product>[].obs;
@@ -99,7 +101,39 @@ class ProductReposistory extends GetxController {
     pref = Sharepref();
     await pref!.init();
     await fetchProduct();
-    await fetchCartList();
+    await _paymentRepository.fundWallet(0);
+  }
+
+  // get Walletbalance String
+  int getBalance() {
+    final bal = _paymentRepository.wallet;
+    return bal;
+  }
+
+  // getproductfromId
+  Product getProductFromId(String id) {
+    final products = productList;
+    print(products);
+    // products.
+    final Product selectedProduct = products.firstWhere(
+      (prod) {
+        final result = prod.id == id.toString();
+        print(result);
+        return result;
+      },
+      orElse: () => Product(
+        id: 'ue6e67w9w7w6w',
+        createdAt: DateTime.now(),
+        initialQuantity: 9,
+        name: 'spoon',
+        price: 1500,
+        soldQuantity: 7,
+        updatedAt: DateTime(2021, 7, 2),
+        v: 0,
+      ),
+    );
+    print(selectedProduct.name.toString());
+    return selectedProduct;
   }
 
 //additem
@@ -116,7 +150,7 @@ class ProductReposistory extends GetxController {
     // update();
   }
 
-//  a
+//  fetch products
   Future fetchProduct() async {
     String userId = pref!.getuserId();
     String token = pref!.read();
@@ -151,4 +185,3 @@ class ProductReposistory extends GetxController {
     }
   }
 }
-// ////
