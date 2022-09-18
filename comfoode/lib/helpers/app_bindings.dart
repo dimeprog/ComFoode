@@ -1,6 +1,7 @@
 import 'package:comfoode/controllers/auth_controller.dart';
 import 'package:comfoode/data/remote/repository/auth_repo.dart';
 import 'package:comfoode/data/remote/repository/cart_repo.dart';
+import 'package:comfoode/data/remote/repository/payment_repo.dart';
 import 'package:comfoode/data/remote/repository/product_repo.dart';
 import 'package:get/get.dart';
 
@@ -14,6 +15,9 @@ class AppBinding extends Bindings {
     );
     Get.lazyPut<CartRespository>(
       () => CartRespository(),
+    );
+    Get.lazyPut<PaymentRepository>(
+      () => PaymentRepository(),
     );
   }
 }

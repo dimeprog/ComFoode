@@ -6,6 +6,7 @@ import 'package:comfoode/data/remote/Api%20Services/Api.dart';
 import 'package:comfoode/data/remote/Api%20Services/constant.dart';
 import 'package:comfoode/data/remote/repository/auth_repo.dart';
 import 'package:comfoode/data/remote/repository/cart_repo.dart';
+import 'package:comfoode/data/remote/repository/payment_repo.dart';
 import 'package:comfoode/helpers/user_token_generator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import '../../../models/product_model.dart';
 
 class ProductReposistory extends GetxController {
   final CartRespository _cartRepository = Get.put(CartRespository());
+  final PaymentRepository _paymentRepository = Get.put(PaymentRepository());
 
   // variable and getter
   RxList<Product> _productList = <Product>[].obs;
@@ -99,7 +101,13 @@ class ProductReposistory extends GetxController {
     pref = Sharepref();
     await pref!.init();
     await fetchProduct();
-    await fetchCartList();
+    await _paymentRepository.fundWallet(0);
+  }
+
+  // get Walletbalance String
+  int getBalance() {
+    final bal = _paymentRepository.wallet;
+    return bal;
   }
 
   // getproductfromId
@@ -142,7 +150,7 @@ class ProductReposistory extends GetxController {
     // update();
   }
 
-//  a
+//  fetch products
   Future fetchProduct() async {
     String userId = pref!.getuserId();
     String token = pref!.read();
@@ -177,4 +185,3 @@ class ProductReposistory extends GetxController {
     }
   }
 }
-// ////

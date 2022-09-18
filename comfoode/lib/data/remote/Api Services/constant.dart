@@ -6,3 +6,8 @@ class AppLinks {
   // static const String product = '/user/$userId/products';
   static const String addToCart = '/user/cart/add-item';
 }
+
+class AppConstantFile {
+  static const String PAYSTACK_PUBLIC_KEY =
+      'pk_test_1b5eb3e8652b01a9476ba4a4ca407fe49933a283';
+}

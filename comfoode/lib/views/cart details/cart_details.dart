@@ -1,3 +1,4 @@
+import 'package:comfoode/data/remote/repository/payment_repo.dart';
 import 'package:comfoode/data/remote/repository/product_repo.dart';
 import 'package:comfoode/utils/resources/dimension_manager.dart';
 import 'package:comfoode/utils/resources/style_manager.dart';
@@ -7,10 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../models/cart_model.dart';
 import '../../models/product_model.dart';
+import '../../utils/widgets/test_screen.dart';
 
-class CartDetailScreen extends StatelessWidget {
+class CartDetailScreen extends StatefulWidget {
   final Cart cart;
-  final ProductReposistory _productReposistory = Get.find<ProductReposistory>();
 
   CartDetailScreen({
     super.key,
@@ -18,8 +19,23 @@ class CartDetailScreen extends StatelessWidget {
   });
 
   @override
+  State<CartDetailScreen> createState() => _CartDetailScreenState();
+}
+
+class _CartDetailScreenState extends State<CartDetailScreen> {
+  final ProductReposistory _productReposistory = Get.find<ProductReposistory>();
+  int? balance;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    balance = _productReposistory.getBalance();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final itemList = cart.items;
+    // final balance = _productReposistory.getBalance();
+    final itemList = widget.cart.items;
     print(itemList!.length.toString());
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,9 +61,14 @@ class CartDetailScreen extends StatelessWidget {
                 SizedBox(
                   width: getWidth(60),
                 ),
-                GestureDetector(
+                GetBuilder<ProductReposistory>(builder: (controller) {
+                  return GestureDetector(
                     onTap: () => Get.to(() => PaymentPayStack()),
-                    child: const WalletContainer(balance: 0.0)),
+                    child: WalletContainer(
+                      balance: balance,
+                    ),
+                  );
+                }),
               ]),
             ),
             SizedBox(
@@ -63,6 +84,25 @@ class CartDetailScreen extends StatelessWidget {
               ),
             )
           ]),
+        ),
+      ),
+      floatingActionButton: Container(
+        height: getHeight(90),
+        width: getWidth(200),
+        child: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+            shape: const StadiumBorder(),
+            backgroundColor: Colors.amber,
+          ),
+          child: const Text(
+            'CheckOut',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ),
       ),
     );

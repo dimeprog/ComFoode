@@ -73,7 +73,10 @@ class PaymentPayStack extends StatelessWidget {
               width: double.infinity,
               child: Center(
                   child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  print('payment tap');
+                  await _paymentRepository.checkout(context);
+                },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue.shade700,
                     maximumSize: Size.infinite),
